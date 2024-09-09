@@ -1,0 +1,7 @@
+import pandas as pd
+
+def categorize_products(activities: pd.DataFrame) -> pd.DataFrame:
+    groups= activities.groupby('sell_date')['product'].agg(['nunique',lambda x: ',' .join(sorted(set(x)))]).reset_index()
+    groups.columns= ['sell_date','num_sold','products']
+    result= groups.sort_values(by='sell_date')
+    return result
